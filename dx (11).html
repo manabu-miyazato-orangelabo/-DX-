@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORANGE LABO 介護DX 実践LAB | 研修ポータル</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                        },
+                        navy: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#0b0f19'
+                        },
+                        neutralbg: '#faf9f6'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- QR Code Generator CDN (for seamless cloud sharing in workshop) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        body {
+            background-color: #faf9f6;
+            color: #1e293b;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .speech-bubble {
+            position: relative;
+            background: #ffffff;
+            border-radius: 1.25rem;
+            border: 2px solid #fdba74;
+        }
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            left: 24px;
+            bottom: -11px;
+            width: 0;
+            height: 0;
+            border-left: 9px solid transparent;
+            border-right: 9px solid transparent;
+            border-top: 11px solid #ffffff;
+        }
+        .speech-bubble::before {
+            content: '';
+            position: absolute;
+            left: 23px;
+            bottom: -14px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 13px solid #fdba74;
+        }
+        .speech-bubble-side {
+            position: relative;
+            background: #ffffff;
+            border-radius: 1.25rem;
+            border: 2px solid #fed7aa;
+        }
+        @media (min-width: 640px) {
+            .speech-bubble-side::before {
+                content: '';
+                position: absolute;
+                top: 20px;
+                left: -12px;
+                border-top: 8px solid transparent;
+                border-bottom: 8px solid transparent;
+                border-right: 12px solid #fed7aa;
+            }
+            .speech-bubble-side::after {
+                content: '';
+                position: absolute;
+                top: 21px;
+                left: -9px;
+                border-top: 7px solid transparent;
+                border-bottom: 7px solid transparent;
+                border-right: 10px solid #ffffff;
+            }
+        }
+        .orabo-bounce {
+            animation: oraboFloat 3s ease-in-out infinite;
+        }
+        @keyframes oraboFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+        /* Smooth subtle scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .tab-active {
+            background-color: #ea580c !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 6px -1px rgba(234, 88, 12, 0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-orange-100 selection:text-orange-900">
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-orange-100 shadow-sm transition-all">
+        <div class="max-w-4xl mx-auto px-4 py-2.5 flex items-center justify-between">
+            <!-- Brand Logo & Title -->
+            <a href="#" class="flex items-center space-x-2.5 group">
+                <!-- Precision Embedded Vector Logo (ORANGE LABO Icon) -->
+                <div class="w-9 h-9 rounded-full bg-white shadow-sm border border-orange-100 p-0.5 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                    <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M 22 40 C 45 18, 75 14, 90 14" stroke="#F97316" stroke-width="8" stroke-linecap="round" fill="none" />
+                        <path d="M 90 24 A 76 76 0 0 0 90 176 Z" fill="#F97316" />
+                        <path d="M 90 186 C 65 186, 40 176, 26 155" stroke="#F97316" stroke-width="8" stroke-linecap="round" fill="none" />
+                        <path d="M 124 14 A 86 86 0 0 1 191 101 L 160 101 A 55 55 0 0 0 124 45 Z" fill="#202A3C" />
+                        <path d="M 124 54 A 47 47 0 0 1 146 101 L 124 101 Z" fill="#202A3C" />
+                        <path d="M 90 134 A 42 42 0 0 0 132 176 L 132 186 A 86 86 0 0 1 90 186 Z" fill="#202A3C" />
+                        <path d="M 132 176 A 86 86 0 0 0 191 135 L 160 135 A 55 55 0 0 1 132 166 Z" fill="#202A3C" />
+                        <path d="M 124 35 L 124 122 L 195 122" stroke="#FFFFFF" stroke-width="16" stroke-linecap="square" stroke-linejoin="miter" fill="none" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="font-bold text-gray-900 text-sm md:text-base leading-tight tracking-tight">ORANGE LABO</h1>
+                    <p class="text-[10px] md:text-xs text-brand-600 font-semibold leading-none">介護DX 実践LAB ポータル</p>
+                </div>
+            </a>
+
+            <!-- Action Buttons: Share & Prompts Jump -->
+            <div class="flex items-center space-x-2">
+                <button onclick="openShareModal()" class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium px-2.5 py-1.5 rounded-lg flex items-center space-x-1 transition border border-gray-200">
+                    <span>🌐</span>
+                    <span class="hidden sm:inline">クラウド公開</span>
+                </button>
+                <a href="#prompts-sec" class="text-xs bg-brand-50 text-brand-700 font-bold px-3 py-1.5 rounded-lg border border-brand-200 hover:bg-brand-100 transition shadow-sm flex items-center space-x-1">
+                    <span>📋</span>
+                    <span>プロンプト</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-4xl mx-auto px-4 py-6 flex-grow space-y-8 w-full">
+
+        <!-- Top Hero Section with ORABO Character -->
+        <section class="bg-white rounded-2xl p-5 md:p-7 shadow-sm border border-orange-100 space-y-5">
+            <!-- Official Guide ORABO Avatar & Speech Bubble -->
+            <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4">
+                <!-- ORABO Full Character Avatar Container -->
+                <div class="relative shrink-0 flex flex-col items-center group">
+                    <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl bg-gradient-to-b from-orange-50 to-amber-100/70 p-1.5 border-2 border-orange-300 shadow-md flex items-center justify-center overflow-hidden orabo-bounce relative cursor-pointer" onclick="triggerOraboVoice()" title="タップしてORABOとおしゃべり！">
+                        <!-- ORABO Authentic Graphic (High Precision SVG Render matching the official design) -->
+                        <div id="orabo-avatar-container" class="w-full h-full flex items-center justify-center filter drop-shadow-md">
+                            <!-- Injected by JavaScript or fallback SVG below -->
+                            <svg id="orabo-vector-main" viewBox="0 0 500 500" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="orabo-orange" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" stop-color="#FF9E2C"/>
+                                        <stop offset="100%" stop-color="#EA580C"/>
+                                    </linearGradient>
+                                    <linearGradient id="antenna-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#93C5FD"/>
+                                        <stop offset="100%" stop-color="#2563EB"/>
+                                    </linearGradient>
+                                    <radialGradient id="eye-glow" cx="50%" cy="50%" r="50%">
+                                        <stop offset="0%" stop-color="#FDE047"/>
+                                        <stop offset="100%" stop-color="#F59E0B"/>
+                                    </radialGradient>
+                                    <filter id="soft-glow" x="-20%" y="-20%" width="140%" height="140%">
+                                        <feGaussianBlur stdDeviation="3" result="glow"/>
+                                        <feComposite in="SourceGraphic" in2="glow" operator="over"/>
+                                    </filter>
+                                </defs>
+
+                                <!-- Tail (Stripy Cyborg Tail) -->
+                                <g id="tail">
+                                    <path d="M 330 330 C 400 350, 480 380, 470 290 C 460 220, 390 260, 350 310" fill="url(#orabo-orange)" stroke="#0F172A" stroke-width="8" stroke-linejoin="round"/>
+                                    <!-- Tail White Stripes -->
+                                    <path d="M 440 250 C 420 280, 435 300, 465 295 C 475 270, 460 240, 440 250 Z" fill="#FFFFFF"/>
+                                    <path d="M 395 285 C 385 315, 410 335, 435 320 C 445 295, 420 275, 395 285 Z" fill="#FFFFFF"/>
+                                    <!-- Tail Tip -->
+                                    <circle cx="455" cy="255" r="28" fill="#FFFFFF"/>
+                                </g>
+
+                                <!-- Cyborg Feet & Legs -->
+                                <g id="legs">
+                                    <!-- Left Leg -->
+                                    <path d="M 160 360 L 150 410 C 145 435, 185 450, 215 440 C 225 410, 215 365, 205 360 Z" fill="#FFFFFF" stroke="#0F172A" stroke-width="8" stroke-linejoin="round"/>
+                                    <path d="M 152 418 C 170 425, 195 425, 212 415" stroke="#EA580C" stroke-width="10" fill="none" stroke-linecap="round"/>
+                                    <!-- Right Leg -->
+                                    <path d="M 275 360 L 265 410 C 260 435, 295 450, 325 440 C 335 410, 325 365, 315 360 Z" fill="#FFFFFF" stroke="#0F172A" stroke-width="8" stroke-linejoin="round"/>
+                                    <path d="M 268 418 C 285 425, 308 425, 322 415" stroke="#EA580C" stroke-width="10" fill="none" stroke-linecap="round"/>
+                                </g>
+
+                                <!-- Body (Chubby White & Orange Robot Body) -->
+                                <g id="body">
+                                    <ellipse cx="240" cy="320" rx="95" ry="90" fill="#FFFFFF" stroke="#0F172A" stroke-width="9"/>
+                                    <!-- Orange Side Flanks -->
+                                    <path d="M 155 280 C 140 315, 145 355, 170 385 C 160 350, 155 310, 155 280 Z" fill="url(#orabo-orange)"/>
+                                    <path d="M 325 280 C 340 315, 335 355, 310 385 C 320 350, 325 310, 325 280 Z" fill="url(#orabo-orange)"/>
+                                    
+                                    <!-- "ORABO" Chest Logo -->
+                                    <text x="240" y="325" font-family="'Arial Black', sans-serif" font-weight="900" font-size="28" fill="#1E293B" text-anchor="middle" letter-spacing="1">ORABO</text>
+                                    
+                                    <!-- Power Capsule Indicator (Glowing Amber) -->
+                                    <rect x="210" y="338" width="60" height="14" rx="7" fill="#F59E0B" stroke="#B45309" stroke-width="2" filter="url(#soft-glow)"/>
+                                    <rect x="215" y="341" width="50" height="6" rx="3" fill="#FEF08A"/>
+
+                                    <!-- Cyber Screws / Side Sensors -->
+                                    <circle cx="175" cy="340" r="4" fill="#64748B"/>
+                                    <circle cx="305" cy="340" r="4" fill="#64748B"/>
+                                </g>
+
+                                <!-- Left Arm (Resting Cyborg Arm on right side) -->
+                                <g id="arm-left">
+                                    <path d="M 325 275 C 365 295, 395 345, 350 380 C 340 370, 330 350, 330 330" fill="#FFFFFF" stroke="#0F172A" stroke-width="8" stroke-linejoin="round"/>
+                                    <circle cx="355" cy="325" r="12" fill="#1E293B"/>
+                                    <circle cx="355" cy="325" r="6" fill="#F97316"/>
+                                </g>
+
+                                <!-- Right Arm (Waving Hand with Orange Paw Pad & Sparks) -->
+                                <g id="arm-right">
+                                    <!-- Spark Motion Lines -->
+                                    <line x1="75" y1="140" x2="60" y2="155" stroke="#F97316" stroke-width="8" stroke-linecap="round"/>
+                                    <line x1="85" y1="120" x2="95" y2="105" stroke="#F97316" stroke-width="8" stroke-linecap="round"/>
+                                    
+                                    <!-- Robot Arm Segment -->
+                                    <path d="M 155 270 C 120 250, 95 210, 115 170" stroke="#0F172A" stroke-width="24" stroke-linecap="round" fill="none"/>
+                                    <path d="M 155 270 C 120 250, 95 210, 115 170" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round" fill="none"/>
+                                    <circle cx="125" cy="225" r="14" fill="#1E293B"/>
+                                    <circle cx="125" cy="225" r="7" fill="#F97316"/>
+
+                                    <!-- Waving Hand Palm -->
+                                    <circle cx="95" cy="175" r="32" fill="#FFFFFF" stroke="#0F172A" stroke-width="7"/>
+                                    <!-- Mechanical Fingers -->
+                                    <rect x="68" y="132" width="13" height="20" rx="6" fill="#FFFFFF" stroke="#0F172A" stroke-width="5"/>
+                                    <rect x="85" y="125" width="14" height="23" rx="7" fill="#FFFFFF" stroke="#0F172A" stroke-width="5"/>
+                                    <rect x="103" y="128" width="14" height="22" rx="7" fill="#FFFFFF" stroke="#0F172A" stroke-width="5"/>
+                                    <rect x="120" y="138" width="13" height="18" rx="6" fill="#FFFFFF" stroke="#0F172A" stroke-width="5"/>
+                                    
+                                    <!-- Big Orange Paw Pad (肉球) -->
+                                    <ellipse cx="95" cy="180" rx="16" ry="14" fill="#EA580C"/>
+                                    <circle cx="83" cy="162" r="5" fill="#EA580C"/>
+                                    <circle cx="95" cy="158" r="5.5" fill="#EA580C"/>
+                                    <circle cx="107" cy="162" r="5" fill="#EA580C"/>
+                                </g>
+
+                                <!-- Collar with Precision ORANGE LABO Medal -->
+                                <g id="collar">
+                                    <path d="M 160 250 C 210 275, 270 275, 320 250" stroke="#1E293B" stroke-width="20" stroke-linecap="round" fill="none"/>
+                                    <!-- Round Medal Badge -->
+                                    <circle cx="240" cy="270" r="28" fill="#FFFFFF" stroke="#1E293B" stroke-width="5"/>
+                                    <!-- Exact ORANGE LABO Logo inside badge -->
+                                    <g transform="translate(219, 249) scale(0.21)">
+                                        <path d="M 22 40 C 45 18, 75 14, 90 14" stroke="#F97316" stroke-width="12" stroke-linecap="round" fill="none" />
+                                        <path d="M 90 24 A 76 76 0 0 0 90 176 Z" fill="#F97316" />
+                                        <path d="M 90 186 C 65 186, 40 176, 26 155" stroke="#F97316" stroke-width="12" stroke-linecap="round" fill="none" />
+                                        <path d="M 124 14 A 86 86 0 0 1 191 101 L 160 101 A 55 55 0 0 0 124 45 Z" fill="#202A3C" />
+                                        <path d="M 124 54 A 47 47 0 0 1 146 101 L 124 101 Z" fill="#202A3C" />
+                                        <path d="M 90 134 A 42 42 0 0 0 132 176 L 132 186 A 86 86 0 0 1 90 186 Z" fill="#202A3C" />
+                                        <path d="M 132 176 A 86 86 0 0 0 191 135 L 160 135 A 55 55 0 0 1 132 166 Z" fill="#202A3C" />
+                                        <path d="M 124 35 L 124 122 L 195 122" stroke="#FFFFFF" stroke-width="22" stroke-linecap="square" fill="none" />
+                                    </g>
+                                </g>
+
+                                <!-- Head (Orange Cat Robot Head with Cute Ears & Antennas) -->
+                                <g id="head">
+                                    <!-- Antennas with Glowing Cyan Spheres -->
+                                    <path d="M 175 75 L 185 30" stroke="#0F172A" stroke-width="7" stroke-linecap="round"/>
+                                    <circle cx="185" cy="25" r="14" fill="url(#antenna-glow)" stroke="#0F172A" stroke-width="4" filter="url(#soft-glow)"/>
+                                    <circle cx="182" cy="22" r="4" fill="#FFFFFF"/>
+
+                                    <path d="M 305 75 L 295 30" stroke="#0F172A" stroke-width="7" stroke-linecap="round"/>
+                                    <circle cx="295" cy="25" r="14" fill="url(#antenna-glow)" stroke="#0F172A" stroke-width="4" filter="url(#soft-glow)"/>
+                                    <circle cx="292" cy="22" r="4" fill="#FFFFFF"/>
+
+                                    <!-- Cat Ears -->
+                                    <!-- Right Ear (Viewer's Left) -->
+                                    <polygon points="140,140 120,40 200,90" fill="url(#orabo-orange)" stroke="#0F172A" stroke-width="8" stroke-linejoin="round"/>
+                                    <polygon points="142,125 133,65 185,95" fill="#FED7AA"/>
+                                    <!-- Left Ear (Viewer's Right) -->
+                                    <polygon points="340,140 360,40 280,90" fill="url(#orabo-orange)" stroke="#0F172A" stroke-width="8" stroke-linejoin="round"/>
+                                    <polygon points="338,125 347,65 295,95" fill="#FED7AA"/>
+
+                                    <!-- Main Head Base (Rounded Chubby Face) -->
+                                    <ellipse cx="240" cy="165" rx="125" ry="105" fill="url(#orabo-orange)" stroke="#0F172A" stroke-width="9"/>
+
+                                    <!-- Head Orange Tabby Stripes -->
+                                    <path d="M 240 65 L 240 100" stroke="#EA580C" stroke-width="12" stroke-linecap="round"/>
+                                    <path d="M 205 70 L 215 102" stroke="#EA580C" stroke-width="10" stroke-linecap="round"/>
+                                    <path d="M 275 70 L 265 102" stroke="#EA580C" stroke-width="10" stroke-linecap="round"/>
+
+                                    <!-- White Face Mask / Cheeks -->
+                                    <path d="M 140 180 C 135 240, 200 255, 240 255 C 280 255, 345 240, 340 180 C 335 130, 280 120, 240 125 C 200 120, 145 130, 140 180 Z" fill="#FFFFFF"/>
+
+                                    <!-- Whiskers (2 on each cheek) -->
+                                    <line x1="120" y1="190" x2="155" y2="195" stroke="#0F172A" stroke-width="6" stroke-linecap="round"/>
+                                    <line x1="125" y1="210" x2="155" y2="208" stroke="#0F172A" stroke-width="6" stroke-linecap="round"/>
+                                    <line x1="360" y1="190" x2="325" y2="195" stroke="#0F172A" stroke-width="6" stroke-linecap="round"/>
+                                    <line x1="355" y1="210" x2="325" y2="208" stroke="#0F172A" stroke-width="6" stroke-linecap="round"/>
+
+                                    <!-- Rosy Pink Cheeks -->
+                                    <ellipse cx="165" cy="215" rx="16" ry="10" fill="#FDA4AF" opacity="0.8"/>
+                                    <ellipse cx="315" cy="215" rx="16" ry="10" fill="#FDA4AF" opacity="0.8"/>
+
+                                    <!-- Big Happy Eyes (Black eye sockets with crescent happy glowing pupils) -->
+                                    <!-- Right Eye (Viewer's Left) -->
+                                    <circle cx="185" cy="180" r="28" fill="#1E293B"/>
+                                    <!-- Crescent Happy Golden Glow -->
+                                    <path d="M 167 182 A 18 18 0 0 1 203 182 A 18 12 0 0 0 167 182 Z" fill="url(#eye-glow)" filter="url(#soft-glow)"/>
+                                    
+                                    <!-- Left Eye (Viewer's Right) -->
+                                    <circle cx="295" cy="180" r="28" fill="#1E293B"/>
+                                    <!-- Crescent Happy Golden Glow -->
+                                    <path d="M 277 182 A 18 18 0 0 1 313 182 A 18 12 0 0 0 277 182 Z" fill="url(#eye-glow)" filter="url(#soft-glow)"/>
+
+                                    <!-- Cute Orange Nose -->
+                                    <polygon points="235,190 245,190 240,198" fill="#EA580C" stroke="#EA580C" stroke-linejoin="round" stroke-width="4"/>
+
+                                    <!-- Smiling Open Mouth with Tongue -->
+                                    <path d="M 220 205 Q 240 215 240 208 Q 240 215 260 205 Q 240 240 220 205 Z" fill="#991B1B" stroke="#0F172A" stroke-width="4" stroke-linejoin="round"/>
+                                    <!-- Pink Tongue -->
+                                    <path d="M 228 215 Q 240 212 252 215 Q 240 238 228 215 Z" fill="#FB7185"/>
+                                </g>
+                            </svg>
+                        </div>
+
+                        <!-- Live status badge -->
+                        <span class="absolute bottom-1 right-1 flex h-3.5 w-3.5">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 border-white"></span>
+                        </span>
+                    </div>
+
+                    <!-- Character Name Badge & Upload Trigger -->
+                    <div class="mt-1.5 flex flex-col items-center space-y-1">
+                        <div class="px-2.5 py-0.5 rounded-full bg-orange-600 text-white text-[10px] font-black tracking-wider shadow-sm flex items-center space-x-1 cursor-pointer" onclick="triggerOraboVoice()">
+                            <span>🐾</span>
+                            <span>ORABO (オラボ)</span>
+                        </div>
+                        <label class="text-[9px] text-orange-600/80 hover:text-orange-700 underline cursor-pointer flex items-center space-x-0.5" title="お手元のオリジナルPNG画像を直接適用できます">
+                            <span>📷 画像を変更</span>
+                            <input type="file" id="custom-orabo-input" accept="image/*" class="hidden" onchange="handleCustomOraboImage(event)">
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Speech Bubble -->
+                <div class="speech-bubble-side p-4 text-xs md:text-sm text-gray-800 leading-relaxed font-medium flex-1 w-full bg-orange-50/30 border border-orange-200">
+                    <div class="flex items-center justify-between mb-1.5">
+                        <span class="font-bold text-brand-700 text-xs flex items-center space-x-1">
+                            <span>🤖</span>
+                            <span>公式ナビゲーター ORABOより</span>
+                        </span>
+                        <span class="text-[10px] text-orange-600 font-semibold bg-orange-100 px-2 py-0.5 rounded-full">研修ガイド</span>
+                    </div>
+                    <p id="orabo-speech-text" class="text-gray-800 leading-relaxed">
+                        「ようこそ！ボクはORANGE LABOの相棒<b>『ORABO（オラボ）』</b>だニャ！🐾<br>
+                        今日はAIに丸投げするのではなく、<b>ケアマネジャーさんの専門性を活かすAI活用</b>を一緒に体験しよう！上から順番にスクロールして進めてみてね！」
+                    </p>
+                </div>
+            </div>
+
+            <!-- Value Proposition Statement -->
+            <div class="border-t border-gray-100 pt-4 space-y-2">
+                <div class="inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-brand-100 text-brand-700">
+                    <span>✨</span>
+                    <span>AIを「知る」から「現場で使える」へ</span>
+                </div>
+                <h2 class="text-lg md:text-xl font-bold text-gray-900 leading-snug">
+                    介護DXは「人にしかできない支援」へ時間を戻すための手段
+                </h2>
+                <p class="text-xs md:text-sm text-gray-600 leading-relaxed">
+                    記録や転記、長文の要約に費やしている時間を削減し、利用者の声を聴くことや多職種連携に集中しましょう。スマホ1台で手軽にコピペ＆比較体験が可能です。
+                </p>
+            </div>
+
+            <!-- 4 Simple Practice Steps -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+                <div class="bg-brand-50/60 p-2.5 rounded-xl border border-brand-100 text-center">
+                    <span class="text-[10px] font-bold text-brand-700 block">STEP 1</span>
+                    <span class="text-xs text-gray-800 font-semibold">事例をコピー</span>
+                </div>
+                <div class="bg-brand-50/60 p-2.5 rounded-xl border border-brand-100 text-center">
+                    <span class="text-[10px] font-bold text-brand-700 block">STEP 2</span>
+                    <span class="text-xs text-gray-800 font-semibold">AIに自由指示</span>
+                </div>
+                <div class="bg-brand-50/60 p-2.5 rounded-xl border border-brand-100 text-center">
+                    <span class="text-[10px] font-bold text-brand-700 block">STEP 3</span>
+                    <span class="text-xs text-gray-800 font-semibold">専用プロンプト</span>
+                </div>
+                <div class="bg-brand-50/60 p-2.5 rounded-xl border border-brand-100 text-center">
+                    <span class="text-[10px] font-bold text-brand-700 block">STEP 4</span>
+                    <span class="text-xs text-gray-800 font-semibold">体裁・精度比較</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Ethical & Safety Rules -->
+        <section class="bg-amber-50/90 border border-amber-200 rounded-2xl p-4 md:p-5 text-xs md:text-sm text-amber-950 space-y-2.5">
+            <div class="flex items-center space-x-2 font-bold text-amber-900 text-sm">
+                <span>⚠️</span>
+                <span>実習前の3つの重要ルール（守秘義務・倫理）</span>
+            </div>
+            <ul class="space-y-1.5 list-disc list-inside text-amber-900 font-medium pl-1 leading-relaxed">
+                <li>本研修で使用するデータは<b>すべて完全な架空事例</b>です。</li>
+                <li>実在の利用者様の氏名、住所、生年月日、個別番号は<b>絶対に入力しないでください</b>。</li>
+                <li>AIの出力文章は必ず<b>専門職（人間）が最終確認（ファクトチェック）</b>を行ってください。</li>
+            </ul>
+        </section>
+
+        <!-- Practice Module 1: Monitoring Record (Universal Care Software Support) -->
+        <section class="bg-white rounded-2xl p-5 md:p-7 shadow-sm border border-orange-100 space-y-6">
+            <div class="border-b border-gray-100 pb-3 flex flex-wrap items-center justify-between gap-2">
+                <div>
+                    <span class="bg-brand-100 text-brand-700 font-bold text-[11px] px-2.5 py-0.5 rounded-full uppercase">実習 01</span>
+                    <h2 class="text-lg md:text-xl font-bold text-gray-900 mt-1">モニタリング記録作成（介護ソフト汎用）</h2>
+                </div>
+                <span class="text-xs text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full font-medium">120字 / 91字改行ルール準拠</span>
+            </div>
+            
+            <!-- ORABO Tip for Module 1 -->
+            <div class="flex items-start space-x-3 bg-orange-50/60 p-3 rounded-xl border border-orange-200 text-xs text-orange-950">
+                <div class="w-10 h-10 rounded-full overflow-hidden shrink-0 border border-orange-300 bg-white flex items-center justify-center p-0.5 orabo-mini-avatar">
+                    <!-- Cloned from vector or loaded image -->
+                    <svg viewBox="0 0 500 500" class="w-full h-full"><use href="#orabo-vector-main"/></svg>
+                </div>
+                <div class="leading-relaxed">
+                    <span class="font-bold text-orange-800">ORABOのチェックポイント：</span>
+                    「まずは【体験1】で短期目標とメモだけをAIに渡して『普通に記録作って』と頼んでみてニャ！文字数が溢れたりして困るはず！その後に【体験2】の専用プロンプトでどう変わるか試そう！🐾」
+                </div>
+            </div>
+
+            <!-- Step 1: Raw Data Only (For Experiencing the "Before" Unstructured Result) -->
+            <div class="space-y-2.5 bg-gray-50 p-4 rounded-xl border border-gray-200">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div>
+                        <div class="inline-flex items-center space-x-1 text-[11px] font-bold text-gray-600 bg-gray-200 px-2 py-0.5 rounded">
+                            <span>1️⃣ 体験1回目</span>
+                            <span>まず普通に試す（指示文なし・データのみ）</span>
+                        </div>
+                        <h3 class="font-bold text-sm text-gray-800 mt-1">実習データのみ（短期目標＋聞き取りメモ）</h3>
+                    </div>
+                    <button onclick="copyToClipboard('raw-data-mon', '実習データ（短期目標とメモ）')" class="text-xs bg-gray-700 hover:bg-gray-800 text-white font-bold px-3.5 py-2 rounded-xl shadow-sm transition active:scale-95 flex items-center justify-center space-x-1.5 shrink-0">
+                        <span>📋</span>
+                        <span>データのみをコピー</span>
+                    </button>
+                </div>
+                <p class="text-[11px] text-gray-500">
+                    ※AI（ChatGPTやGemini）にこれを貼り付け、末尾に<b>「これでモニタリング記録を作って」</b>とだけ書いて送信してみてください。（文字数が長すぎたり、ソフトに貼りにくい結果になります）
+                </p>
+                <div class="bg-white text-gray-700 rounded-xl p-3 text-xs font-mono leading-relaxed whitespace-pre-wrap select-all max-h-40 overflow-y-auto border border-gray-200 shadow-inner" id="raw-data-mon">■ 現在の短期目標：
+・目標1：膝の痛みが軽減し、安全に自宅内を移動できる。
+・目標2：週1回、ヘルパーと一緒に近所のスーパーへ買い物に行ける。
+
+■ モニタリング聞き取りメモ・文字起こしデータ：
+・本人「デイサービスの機能訓練のおかげで温めた後は膝が楽。でも家の中で立ち上がるときに少しグラつくことがあるよ」
+・ヘルパー報告「玄関の段差を昇るとき手すりを使わないことがありヒヤリとした。買い物時はシルバーカーを押して400m完走できているが休憩が必要」
+・デイ相談員「機能訓練は意欲的。立ち上がり時のふらつきに対し、立ち上がり動作訓練と手すり保持の指示を行っている」
+・ケアマネ所感「買い物の目標は概ね達成中。自宅内の移動安定性と段差対応が課題」
+
+これでモニタリング記録を作ってください。</div>
+            </div>
+
+            <!-- Step 2: Integrated Workshop Prompt 1 (Data Pre-filled) -->
+            <div class="space-y-2.5 bg-gradient-to-br from-brand-50/50 to-orange-50/20 p-4 rounded-xl border-2 border-brand-200">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div>
+                        <div class="inline-flex items-center space-x-1 text-[11px] font-bold text-brand-700 bg-brand-100 px-2 py-0.5 rounded">
+                            <span>2️⃣ 体験2回目</span>
+                            <span>専用プロンプトで劇的変化を体験！</span>
+                        </div>
+                        <h3 class="font-bold text-sm text-gray-900 mt-1">実習用モニタリングプロンプト（データ一体型）</h3>
+                    </div>
+                    <button onclick="copyToClipboard('prompt-workshop-mon', '実習用モニタリングプロンプト')" class="text-xs bg-brand-600 hover:bg-brand-700 text-white font-bold px-4 py-2 rounded-xl shadow-md transition active:scale-95 flex items-center justify-center space-x-1.5 shrink-0">
+                        <span>📋</span>
+                        <span>このプロンプトをコピー</span>
+                    </button>
+                </div>
+                <p class="text-[11px] text-gray-500">
+                    ※プロンプトの指示の中に、短期目標とメモが最初から組み込まれています。コピーしてそのままAIに送信してください。
+                </p>
+                <div class="bg-navy-950 text-gray-200 rounded-xl p-3.5 text-xs font-mono leading-relaxed whitespace-pre-wrap select-all max-h-56 overflow-y-auto border border-navy-800 shadow-inner" id="prompt-workshop-mon">あなたは優秀なケアマネジャーです。以下の「提供情報」に基づき、介護ソフトのモニタリング入力欄にそのまま貼り付けられる正確なモニタリング記録を作成してください。
+
+【厳格な遵守ルール】
+1. 憶測や情報の補完は一切行わず、提供された事実・発言のみを正確に反映すること。
+2. 介護保険法および「適切なケアマネジメント手法」の基本ケア項目を踏まえた視点で整理すること。
+3. 出力順序は必ず「1. 短期目標ごとの評価」→「2. 総合評価」とすること。
+4. 個人情報保護のため、匿名化・記号化された表記を維持すること。
+
+【出力フォーマット・文字数制限】
+
+■ 1. 短期目標ごとの評価
+各短期目標に対し、以下の3要素のみを盛り込んだ極めて簡潔な文章（1〜2文、全角120文字以内）で作成してください。
+・要素：①実施状況 ②達成度 ③支援上の要点
+・背景説明や重複表現は排除し、事実の列挙と定型表現に徹底すること。
+
+■ 2. 総合評価
+介護ソフトのテキストエリアに貼り付けた際にレイアウトが崩れないよう、以下の体裁を厳守してください。
+・文字数目安：1行あたり全角91文字程度、全体で13行程度。
+・改行ルール：意味のまとまり（句点「。」など）でのみ改行し、文中・語中・助詞の直後・接続語の途中での不自然な改行は厳禁。
+・丁寧かつ実務的な日本語でまとめ、提示されていないサービス利用や事実は絶対に記載しないこと。
+
+---
+【提供情報】
+■ 現在の短期目標：
+・目標1：膝の痛みが軽減し、安全に自宅内を移動できる。
+・目標2：週1回、ヘルパーと一緒に近所のスーパーへ買い物に行ける。
+
+■ モニタリング聞き取りメモ・文字起こしデータ：
+・本人「デイサービスの機能訓練のおかげで温めた後は膝が楽。でも家の中で立ち上がるときに少しグラつくことがあるよ」
+・ヘルパー報告「玄関の段差を昇るとき手すりを使わないことがありヒヤリとした。買い物時はシルバーカーを押して400m完走できているが休憩が必要」
+・デイ相談員「機能訓練は意欲的。立ち上がり時のふらつきに対し、立ち上がり動作訓練と手すり保持の指示を行っている」
+・ケアマネ所感「買い物の目標は概ね達成中。自宅内の移動安定性と段差対応が課題」</div>
+            </div>
+        </section>
+
+        <!-- Practice Module 2: Meeting Minutes (Form 4) -->
+        <section class="bg-white rounded-2xl p-5 md:p-7 shadow-sm border border-orange-100 space-y-6">
+            <div class="border-b border-gray-100 pb-3 flex flex-wrap items-center justify-between gap-2">
+                <div>
+                    <span class="bg-brand-100 text-brand-700 font-bold text-[11px] px-2.5 py-0.5 rounded-full uppercase">実習 02</span>
+                    <h2 class="text-lg md:text-xl font-bold text-gray-900 mt-1">サービス担当者会議録（第4表）作成</h2>
+                </div>
+                <span class="text-xs text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full font-medium">1. 2. 3. 構造化・自立支援準拠</span>
+            </div>
+
+            <!-- ORABO Tip for Module 2 -->
+            <div class="flex items-start space-x-3 bg-orange-50/60 p-3 rounded-xl border border-orange-200 text-xs text-orange-950">
+                <div class="w-10 h-10 rounded-full overflow-hidden shrink-0 border border-orange-300 bg-white flex items-center justify-center p-0.5 orabo-mini-avatar">
+                    <svg viewBox="0 0 500 500" class="w-full h-full"><use href="#orabo-vector-main"/></svg>
+                </div>
+                <div class="leading-relaxed">
+                    <span class="font-bold text-orange-800">ORABOのチェックポイント：</span>
+                    「こちらもまずは【体験1】で会話メモだけをAIに渡してみてね！『ダラダラとした要約』にしかならないことが実感できるよ。そのあと【体験2】のプロンプトを試すと感動するニャ！🐾」
+                </div>
+            </div>
+
+            <!-- Step 1: Raw Data Only (For Experiencing the "Before" Unstructured Result) -->
+            <div class="space-y-2.5 bg-gray-50 p-4 rounded-xl border border-gray-200">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div>
+                        <div class="inline-flex items-center space-x-1 text-[11px] font-bold text-gray-600 bg-gray-200 px-2 py-0.5 rounded">
+                            <span>1️⃣ 体験1回目</span>
+                            <span>まず普通に試す（指示文なし・会話データのみ）</span>
+                        </div>
+                        <h3 class="font-bold text-sm text-gray-800 mt-1">実習データのみ（基本情報＋会議の会話録音）</h3>
+                    </div>
+                    <button onclick="copyToClipboard('raw-data-mtg', '実習データ（基本情報と会議文字起こし）')" class="text-xs bg-gray-700 hover:bg-gray-800 text-white font-bold px-3.5 py-2 rounded-xl shadow-sm transition active:scale-95 flex items-center justify-center space-x-1.5 shrink-0">
+                        <span>📋</span>
+                        <span>データのみをコピー</span>
+                    </button>
+                </div>
+                <p class="text-[11px] text-gray-500">
+                    ※AIにこれを貼り付け、末尾に<b>「これで担当者会議録を作って」</b>とだけ書いて送信してみてください。（項目と結論が揃わず、会話のあらすじだけになります）
+                </p>
+                <div class="bg-white text-gray-700 rounded-xl p-3 text-xs font-mono leading-relaxed whitespace-pre-wrap select-all max-h-40 overflow-y-auto border border-gray-200 shadow-inner" id="raw-data-mtg">■ 利用者基本情報・短期目標・利用中サービス：
+・佐藤 ハナ様（82歳・女性・要介護2・独居）
+・主訴：膝痛の悪化により買い物や外出が億劫になっている。自宅での転倒不安がある。
+・現在の短期目標：
+  1. 膝の痛みが軽減し、安全に自宅内を移動できる。
+  2. 週1回、ヘルパーと一緒に近所のスーパーへ買い物に行ける。
+・利用中サービス：
+  ・訪問介護（週2回：身体介護・生活援助）
+  ・通所介護（週1回：入浴・機能訓練）
+
+■ サービス担当者会議 音声文字起こしデータ：
+ケアマネ「本日はお集まりいただきありがとうございます。佐藤様の更新に伴う会議です。最近、膝の痛みが少し強まっているようで、デイサービスでの様子はいかがでしょうか？」
+デイ相談員「はい、デイサービスでは到着直後は膝の痛みを訴えられますが、個別機能訓練で温熱療法と軽いストレッチを行った後は『楽になった』とおっしゃっています。ただ、レクリエーション時の立ち上がり動作で少しふらつきが見られますね。」
+ヘルパーサ責「訪問介護の際も、玄関の上がり框（かまち）で手すりを使わずに昇ろうとしてヒヤリとすることがありました。買い物への同行時は、手押し車（シルバーカー）があれば休み休みですが400mほど歩けています。」
+ケアマネ「なるほど。ご本人は『自分で買い物に行きたい』というご希望が強いですが、転倒リスクの軽減が課題ですね。福祉用具さん、何か提案はありますか？」
+福祉用具専門員「玄関の上がり框に置き型の段差解消手すりを設置することをお勧めします。レンタル対応が可能です。また、現在お使いのシルバーカーですが、ブレーキの効きが少し甘くなっているので、より安定感のあるタイプへの変更を提案できます。」
+本人「買い出しは自分で選ぶのが楽しみだから続けたいのよ。手すりがあれば家の中でも安心だし、シルバーカーも新しいのが試せるならお願いしたいわ。」
+ケアマネ「承知いたしました。では、1.玄関への手すり追加レンタルとシルバーカーの変更、2.デイサービスでの立ち上がり訓練の継続、3.ヘルパーの買い物同行時の見守り強化、この3点をケアプランに反映させて進めましょう。」
+
+これで第4表のサービス担当者会議録を作ってください。</div>
+            </div>
+
+            <!-- Step 2: Integrated Workshop Prompt 2 (Data Pre-filled) -->
+            <div class="space-y-2.5 bg-gradient-to-br from-brand-50/50 to-orange-50/20 p-4 rounded-xl border-2 border-brand-200">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div>
+                        <div class="inline-flex items-center space-x-1 text-[11px] font-bold text-brand-700 bg-brand-100 px-2 py-0.5 rounded">
+                            <span>2️⃣ 体験2回目</span>
+                            <span>専用プロンプトで劇的変化を体験！</span>
+                        </div>
+                        <h3 class="font-bold text-sm text-gray-900 mt-1">実習用第4表プロンプト（データ一体型）</h3>
+                    </div>
+                    <button onclick="copyToClipboard('prompt-workshop-mtg', '実習用第4表プロンプト')" class="text-xs bg-brand-600 hover:bg-brand-700 text-white font-bold px-4 py-2 rounded-xl shadow-md transition active:scale-95 flex items-center justify-center space-x-1.5 shrink-0">
+                        <span>📋</span>
+                        <span>このプロンプトをコピー</span>
+                    </button>
+                </div>
+                <p class="text-[11px] text-gray-500">
+                    ※会議参加者の発言や利用者の基本情報がすべてセットされています。コピーしてそのままAIで実行してください。
+                </p>
+                <div class="bg-navy-950 text-gray-200 rounded-xl p-3.5 text-xs font-mono leading-relaxed whitespace-pre-wrap select-all max-h-56 overflow-y-auto border border-navy-800 shadow-inner" id="prompt-workshop-mtg">あなたは、介護保険法（平成9年法律第123号）、厚生労働省の通知・指導指針、および居宅介護支援事業所の運営基準に精通した「優秀な居宅介護支援専門員（ケアマネジャー）」です。以下の「提供情報」に基づき、ケアマネジメントの正式文書として相応しい、簡潔かつ過不足のない「サービス担当者会議録（第4表）」を作成してください。
+
+【出力フォーマット】
+以下の4つの大項目を含め、テキストエディタや介護ソフトにそのままコピー＆ペーストして使用できる形式で出力してください。
+
+## 検討した項目
+会議開催の趣旨：[会議開催の趣旨を明記]
+1. [検討項目テーマ1]
+2. [検討項目テーマ2]
+3. [検討項目テーマ3]
+
+## 検討内容
+1. [1の検討内容：専門職間の意見交換、本人の意向、アセスメント視点等を簡潔に]
+2. [2の検討内容]
+3. [3の検討内容]
+
+## 結論
+1. [1に対する結論：決定事項、各サービスの役割、短期目標へのアプローチ等]
+2. [2に対する結論]
+3. [3に対する結論]
+
+## 残された課題
+1. [今後のモニタリングポイント、次回までに確認すべき事項、状態変化時の対応策等]
+2. [残された課題2]
+
+【記述ルール・制約条件】
+1. 文体・トーン：専門職が読みやすい、引き締まった自然な敬語（丁寧語）文体とすること。
+2. 表現の厳格化：曖昧な表現（〜のようです等）や口語は一切排除し、客観的かつ事実に基づいた正式な文書として整えること。
+3. 視点：常に「利用者本位」「自立支援」「尊厳保持」の観点が文章から読み取れるように構成すること。
+4. 情報の厳選：文字起こしの会話から、ケアプラン（第1表〜第3表）に直結する「重要な要点」のみを抽出・再構成すること。
+5. 番号付けの徹底：項目内の番号はすべて `1. ` `2. ` のように「半角数字＋半角ピリオド＋半角スペース」で統一すること（丸数字①等は不使用）。
+6. 各項目は1000文字以内でまとめること。
+
+---
+【提供情報】
+■ 利用者基本情報・短期目標・利用中サービス：
+・佐藤 ハナ様（82歳・女性・要介護2・独居）
+・主訴：膝痛の悪化により買い物や外出が億劫になっている。自宅での転倒不安がある。
+・現在の短期目標：
+  1. 膝の痛みが軽減し、安全に自宅内を移動できる。
+  2. 週1回、ヘルパーと一緒に近所のスーパーへ買い物に行ける。
+・利用中サービス：
+  ・訪問介護（週2回：身体介護・生活援助）
+  ・通所介護（週1回：入浴・機能訓練）
+
+■ サービス担当者会議 音声文字起こしデータ：
+ケアマネ「本日はお集まりいただきありがとうございます。佐藤様の更新に伴う会議です。最近、膝の痛みが少し強まっているようで、デイサービスでの様子はいかがでしょうか？」
+デイ相談員「はい、デイサービスでは到着直後は膝の痛みを訴えられますが、個別機能訓練で温熱療法と軽いストレッチを行った後は『楽になった』とおっしゃっています。ただ、レクリエーション時の立ち上がり動作で少しふらつきが見られますね。」
+ヘルパーサ責「訪問介護の際も、玄関の上がり框（かまち）で手すりを使わずに昇ろうとしてヒヤリとすることがありました。買い物への同行時は、手押し車（シルバーカー）があれば休み休みですが400mほど歩けています。」
+ケアマネ「なるほど。ご本人は『自分で買い物に行きたい』というご希望が強いですが、転倒リスクの軽減が課題ですね。福祉用具さん、何か提案はありますか？」
+福祉用具専門員「玄関の上がり框に置き型の段差解消手すりを設置することをお勧めします。レンタル対応が可能です。また、現在お使いのシルバーカーですが、ブレーキの効きが少し甘くなっているので、より安定感のあるタイプへの変更を提案できます。」
+本人「買い出しは自分で選ぶのが楽しみだから続けたいのよ。手すりがあれば家の中でも安心だし、シルバーカーも新しいのが試せるならお願いしたいわ。」
+ケアマネ「承知いたしました。では、1.玄関への手すり追加レンタルとシルバーカーの変更、2.デイサービスでの立ち上がり訓練の継続、3.ヘルパーの買い物同行時の見守り強化、この3点をケアプランに反映させて進めましょう。」</div>
+            </div>
+        </section>
+
+        <!-- Section: Prompts Library & AI Launchers -->
+        <section id="prompts-sec" class="bg-white rounded-2xl p-5 md:p-7 shadow-sm border border-orange-100 space-y-6">
+            <!-- External AI Quick Launch Buttons (Robust, Non-overflow Flex Layout with Official Icons) -->
+            <div class="bg-gradient-to-br from-brand-600 via-orange-500 to-amber-600 rounded-2xl p-5 text-white shadow-md">
+                <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+                    <div class="space-y-1">
+                        <div class="inline-flex items-center space-x-1.5 bg-white/20 backdrop-blur-sm px-2.5 py-0.5 rounded-full text-xs font-bold text-white">
+                            <span>🚀</span>
+                            <span>コピーしたプロンプトを試す</span>
+                        </div>
+                        <h3 class="text-base font-bold text-white tracking-tight">AIツールを別タブで起動</h3>
+                        <p class="text-xs text-orange-50 leading-relaxed max-w-md">
+                            コピーしたプロンプトをそのままAIの入力欄に貼り付けて送信してください。
+                        </p>
+                    </div>
+
+                    <!-- AI Buttons Container -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full lg:w-auto shrink-0">
+                        <!-- ChatGPT Launch Button -->
+                        <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" class="group bg-white hover:bg-emerald-50 text-gray-900 border border-emerald-100 px-4 py-3 rounded-xl shadow-sm hover:shadow-md transition-all flex items-center justify-between space-x-3 active:scale-95">
+                            <div class="flex items-center space-x-3">
+                                <!-- ChatGPT Official Swirl Logo (SVG) -->
+                                <div class="w-8 h-8 rounded-lg bg-[#10a37f] text-white flex items-center justify-center p-1.5 shadow-xs shrink-0 group-hover:scale-105 transition-transform">
+                                    <svg viewBox="0 0 24 24" class="w-full h-full fill-current" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.259 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7466-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1683a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4947zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1683a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.8956zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.6669zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1635a.0804.0804 0 0 1-.038-.0567V6.0748a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.4598a.7948.7948 0 0 0-.3927.6813v6.7219zm1.2588-2.6176l2.435-1.4056 2.435 1.4056v2.8112l-2.435 1.4056-2.435-1.4056z"/>
+                                    </svg>
+                                </div>
+                                <div class="text-left">
+                                    <div class="text-xs font-bold text-gray-900 group-hover:text-emerald-700 leading-tight">ChatGPT</div>
+                                    <div class="text-[10px] text-gray-500">ブラウザで開く</div>
+                                </div>
+                            </div>
+                            <span class="text-emerald-600 font-bold text-xs group-hover:translate-x-0.5 transition-transform">↗</span>
+                        </a>
+
+                        <!-- Google Gemini Launch Button -->
+                        <a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer" class="group bg-white hover:bg-blue-50 text-gray-900 border border-blue-100 px-4 py-3 rounded-xl shadow-sm hover:shadow-md transition-all flex items-center justify-between space-x-3 active:scale-95">
+                            <div class="flex items-center space-x-3">
+                                <!-- Gemini Sparkle Quad-Star Logo (SVG with Official Gradient) -->
+                                <div class="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center p-1.5 shadow-xs shrink-0 group-hover:scale-105 transition-transform">
+                                    <svg viewBox="0 0 24 24" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                                        <defs>
+                                            <linearGradient id="geminiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stop-color="#4E82EE" />
+                                                <stop offset="50%" stop-color="#9B72CB" />
+                                                <stop offset="100%" stop-color="#D96570" />
+                                            </linearGradient>
+                                        </defs>
+                                        <path d="M12 0C12 6.627 6.627 12 0 12C6.627 12 12 17.373 12 24C12 17.373 17.373 12 24 12C17.373 12 12 6.627 12 0Z" fill="url(#geminiGrad)" />
+                                    </svg>
+                                </div>
+                                <div class="text-left">
+                                    <div class="text-xs font-bold text-gray-900 group-hover:text-blue-700 leading-tight">Gemini</div>
+                                    <div class="text-[10px] text-gray-500">ブラウザで開く</div>
+                                </div>
+                            </div>
+                            <span class="text-blue-600 font-bold text-xs group-hover:translate-x-0.5 transition-transform">↗</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accordion for Blank Practical Templates (Clean and Proper Markup) -->
+            <details class="group bg-gray-50 rounded-xl border border-gray-200 overflow-hidden transition">
+                <summary class="flex items-center justify-between p-4 cursor-pointer font-bold text-xs md:text-sm text-gray-700 hover:text-brand-600 transition list-none select-none">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="p-1 rounded bg-gray-200 group-open:bg-brand-100 text-gray-600 group-open:text-brand-600 text-xs">📁</span>
+                        <span>実務持ち帰り用：汎用プロンプト・テンプレート（空欄版）</span>
+                        <span class="text-[10px] text-gray-500 bg-white px-2 py-0.5 rounded-full border border-gray-200">※研修終了後に開いてご利用ください</span>
+                    </div>
+                    <span class="text-gray-400 group-open:rotate-180 transition-transform duration-250 text-xs">▼</span>
+                </summary>
+
+                <div class="p-4 md:p-5 border-t border-gray-200 bg-white space-y-6">
+                    <p class="text-xs text-gray-600 leading-relaxed">
+                        研修後の日常業務でご自身の事例を入力する際は、こちらの空欄版テンプレートをご活用ください。
+                    </p>
+
+                    <!-- Prompt 1: Monitoring (Blank) -->
+                    <div class="space-y-2.5">
+                        <div class="flex justify-between items-center">
+                            <h4 class="font-bold text-xs md:text-sm text-gray-800">1. モニタリング記録作成（空欄テンプレート）</h4>
+                            <button onclick="copyToClipboard('prompt-monitoring', '実務用モニタリングテンプレート')" class="text-xs bg-gray-800 text-white font-semibold px-3 py-1.5 rounded-lg hover:bg-gray-900 shadow-sm transition active:scale-95 flex items-center space-x-1">
+                                <span>📋</span>
+                                <span>テンプレートをコピー</span>
+                            </button>
+                        </div>
+                        <div class="bg-navy-950 text-gray-200 rounded-xl p-3.5 text-xs font-mono overflow-x-auto leading-relaxed whitespace-pre-wrap select-all border border-navy-800 shadow-inner" id="prompt-monitoring">あなたは優秀なケアマネジャーです。以下の「提供情報」に基づき、介護ソフトのモニタリング入力欄にそのまま貼り付けられる正確なモニタリング記録を作成してください。
+
+【厳格な遵守ルール】
+1. 憶測や情報の補完は一切行わず、提供された事実・発言のみを正確に反映すること。
+2. 介護保険法および「適切なケアマネジメント手法」の基本ケア項目を踏まえた視点で整理すること。
+3. 出力順序は必ず「1. 短期目標ごとの評価」→「2. 総合評価」とすること。
+4. 個人情報保護のため、匿名化・記号化された表記を維持すること。
+
+【出力フォーマット・文字数制限】
+
+■ 1. 短期目標ごとの評価
+各短期目標に対し、以下の3要素のみを盛り込んだ極めて簡潔な文章（1〜2文、全角120文字以内）で作成してください。
+・要素：①実施状況 ②達成度 ③支援上の要点
+・背景説明や重複表現は排除し、事実の列挙と定型表現に徹底すること。
+
+■ 2. 総合評価
+介護ソフトのテキストエリアに貼り付けた際にレイアウトが崩れないよう、以下の体裁を厳守してください。
+・文字数目安：1行あたり全角91文字程度、全体で13行程度。
+・改行ルール：意味のまとまり（句点「。」など）でのみ改行し、文中・語中・助詞の直後・接続語の途中での不自然な改行は厳禁。
+・丁寧かつ実務的な日本語でまとめ、提示されていないサービス利用や事実は絶対に記載しないこと。
+
+---
+【提供情報】
+■ 現在の短期目標：
+・目標1：[ここに記入]
+・目標2：[ここに記入]
+
+■ モニタリング聞き取りメモ・文字起こしデータ：
+[ここに聞き取りメモや会話データを貼り付け]</div>
+                    </div>
+
+                    <!-- Prompt 2: Meeting Minutes (Form 4 Blank) -->
+                    <div class="space-y-2.5 pt-4 border-t border-gray-100">
+                        <div class="flex justify-between items-center">
+                            <h4 class="font-bold text-xs md:text-sm text-gray-800">2. サービス担当者会議録（第4表・空欄テンプレート）</h4>
+                            <button onclick="copyToClipboard('prompt-meeting', '実務用第4表テンプレート')" class="text-xs bg-gray-800 text-white font-semibold px-3 py-1.5 rounded-lg hover:bg-gray-900 shadow-sm transition active:scale-95 flex items-center space-x-1">
+                                <span>📋</span>
+                                <span>テンプレートをコピー</span>
+                            </button>
+                        </div>
+                        <div class="bg-navy-950 text-gray-200 rounded-xl p-3.5 text-xs font-mono overflow-x-auto leading-relaxed whitespace-pre-wrap select-all border border-navy-800 shadow-inner" id="prompt-meeting">あなたは、介護保険法（平成9年法律第123号）、厚生労働省の通知・指導指針、および居宅介護支援事業所の運営基準に精通した「優秀な居宅介護支援専門員（ケアマネジャー）」です。以下の「提供情報」に基づき、ケアマネジメントの正式文書として相応しい、簡潔かつ過不足のない「サービス担当者会議録（第4表）」を作成してください。
+
+【出力フォーマット】
+以下の4つの大項目を含め、テキストエディタや介護ソフトにそのままコピー＆ペーストして使用できる形式で出力してください。
+
+## 検討した項目
+会議開催の趣旨：[会議開催の趣旨を明記]
+1. [検討項目テーマ1]
+2. [検討項目テーマ2]
+3. [検討項目テーマ3]
+
+## 検討内容
+1. [1の検討内容：専門職間の意見交換、本人の意向、アセスメント視点等を簡潔に]
+2. [2の検討内容]
+3. [3の検討内容]
+
+## 結論
+1. [1に対する結論：決定事項、各サービスの役割、短期目標へのアプローチ等]
+2. [2に対する結論]
+3. [3に対する結論]
+
+## 残された課題
+1. [今後のモニタリングポイント、次回までに確認すべき事項、状態変化時の対応策等]
+2. [残された課題2]
+
+【記述ルール・制約条件】
+1. 文体・トーン：専門職が読みやすい、引き締まった自然な敬語（丁寧語）文体とすること。
+2. 表現の厳格化：曖昧な表現（〜のようです等）や口語は一切排除し、客観的かつ事実に基づいた正式な文書として整えること。
+3. 視点：常に「利用者本位」「自立支援」「尊厳保持」の観点が文章から読み取れるように構成すること。
+4. 情報の厳選：文字起こしの会話から、ケアプラン（第1表〜第3表）に直結する「重要な要点」のみを抽出・再構成すること。
+5. 番号付けの徹底：項目内の番号はすべて `1. ` `2. ` のように「半角数字＋半角ピリオド＋半角スペース」で統一すること（丸数字①等は不使用）。
+6. 各項目は1000文字以内でまとめること。
+
+---
+【提供情報】
+■ 利用者基本情報・短期目標・利用中サービス：
+・利用者情報：[例：80代女性、要介護2、独居など]
+・現在の短期目標：[ここに記入]
+・利用中サービス：[ここに記入]
+
+■ サービス担当者会議 音声文字起こしデータ（または会議メモ）：
+[ここに会議の聞き取り内容や文字起こしテキストを貼り付け]</div>
+                    </div>
+                </div>
+            </details>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-12 py-6 text-center text-xs text-gray-500">
+        <div class="max-w-4xl mx-auto px-4 space-y-2">
+            <div class="flex items-center justify-center space-x-2">
+                <div class="w-7 h-7 rounded-full overflow-hidden border border-orange-200 bg-white flex items-center justify-center p-0.5 shadow-xs orabo-mini-avatar">
+                    <svg viewBox="0 0 500 500" class="w-full h-full"><use href="#orabo-vector-main"/></svg>
+                </div>
+                <p class="font-bold text-gray-800">ORANGE LABO 介護DX 実践プロジェクト</p>
+            </div>
+            <p class="text-[11px] text-gray-400">※本サイトに掲載されている事例・データはすべて研修用の架空のものです。</p>
+        </div>
+    </footer>
+
+    <!-- Cloud Sharing & QR Code Modal -->
+    <div id="share-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-5 md:p-6 space-y-4 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeShareModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">
+                ✕
+            </button>
+
+            <div class="flex items-center space-x-2">
+                <span class="text-xl">🌐</span>
+                <h3 class="font-bold text-base md:text-lg text-gray-900">このサイトをクラウドで他者に共有する方法</h3>
+            </div>
+
+            <p class="text-xs text-gray-600 leading-relaxed">
+                このファイル（<code>index.html</code>）と画像（<code>orabo.png</code>）を同じフォルダに入れて無料のクラウドサービスにドラッグ＆ドロップするだけで、数秒で誰でもアクセスできるURLが発行されます。
+            </p>
+
+            <!-- 3 Easy Cloud Sharing Methods -->
+            <div class="space-y-2.5 text-xs">
+                <!-- Option A: Netlify Drop -->
+                <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 space-y-1">
+                    <div class="font-bold text-emerald-900 flex items-center justify-between">
+                        <span>① Netlify Drop（最も簡単・30秒で公開）</span>
+                        <span class="bg-emerald-200 text-emerald-800 text-[10px] px-1.5 py-0.5 rounded font-bold">推奨</span>
+                    </div>
+                    <p class="text-emerald-800">
+                        1. <a href="https://app.netlify.com/drop" target="_blank" class="underline font-bold">Netlify Drop</a> をブラウザで開く<br>
+                        2. <code>index.html</code> と <code>orabo.png</code> を入れたフォルダをドラッグ＆ドロップするだけ！<br>
+                        3. 即座に共有用URLが発行されます。
+                    </p>
+                </div>
+
+                <!-- Option B: GitHub Pages -->
+                <div class="bg-gray-50 border border-gray-200 rounded-xl p-3 space-y-1">
+                    <div class="font-bold text-gray-900">② GitHub Pages（完全永続・自社運用向け）</div>
+                    <p class="text-gray-600">
+                        GitHubのリポジトリに <code>index.html</code> と画像をアップロードし、「Settings」→「Pages」を有効化するだけで永続URL（<code>username.github.io/...</code>）になります。
+                    </p>
+                </div>
+
+                <!-- Option C: Google Sites Embed -->
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 space-y-1">
+                    <div class="font-bold text-blue-900">③ Google サイトに埋め込む場合</div>
+                    <p class="text-blue-800">
+                        Google サイトの編集画面で「挿入」→「埋め込み」→「埋め込みコード」を選択し、このHTMLコードをそのまま貼り付けるだけで社内ポータルに組み込めます。
+                    </p>
+                </div>
+            </div>
+
+            <!-- Real-time QR Code Generator for Current URL -->
+            <div class="border-t border-gray-100 pt-3 space-y-2 text-center">
+                <p class="text-xs font-bold text-gray-700">受講者用 QRコード即時生成</p>
+                <p class="text-[11px] text-gray-500">公開後のURLを入力すると、その場で受講者用QRコードが生成されます。</p>
+                
+                <div class="flex items-center space-x-2 max-w-sm mx-auto">
+                    <input type="text" id="custom-qr-url" placeholder="https://..." class="flex-1 text-xs px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-brand-500">
+                    <button onclick="updateQrCode()" class="text-xs bg-brand-600 hover:bg-brand-700 text-white font-bold px-3 py-2 rounded-lg transition shrink-0">
+                        更新
+                    </button>
+                </div>
+
+                <div class="flex flex-col items-center justify-center pt-2">
+                    <div id="qrcode" class="p-2.5 bg-white rounded-xl border border-gray-200 shadow-sm inline-flex items-center justify-center min-w-[130px] min-h-[130px]"></div>
+                    <p class="text-[11px] text-gray-500 mt-1.5 break-all max-w-xs" id="qr-target-url">URL読み込み中...</p>
+                </div>
+            </div>
+
+            <div class="text-center pt-1">
+                <button onclick="closeShareModal()" class="w-full bg-gray-800 text-white font-bold py-2.5 rounded-xl text-xs hover:bg-gray-900 transition">
+                    閉じる
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-navy-900 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl transition-all opacity-0 translate-y-4 pointer-events-none z-50 flex items-center space-x-2 border border-navy-800">
+        <span class="text-emerald-400 font-bold text-sm">✓</span>
+        <span id="toast-msg">クリップボードにコピーしました！</span>
+    </div>
+
+    <!-- Application Logic -->
+    <script>
+        // Check if user previously uploaded orabo image via localStorage
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedImg = localStorage.getItem('orabo_custom_avatar');
+            if (savedImg) {
+                applyOraboImage(savedImg);
+            }
+        });
+
+        // Handle user uploading their exact image file directly into the portal
+        function handleCustomOraboImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imgData = e.target.result;
+                try {
+                    localStorage.setItem('orabo_custom_avatar', imgData);
+                } catch(err) {
+                    console.warn('Storage limit reached, displaying in-session only');
+                }
+                applyOraboImage(imgData);
+                showToast("ORABOの公式画像を設定したニャ！🐾");
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function applyOraboImage(srcUrl) {
+            // Update main avatar
+            const container = document.getElementById('orabo-avatar-container');
+            container.innerHTML = `<img src="${srcUrl}" alt="ORABO" class="w-full h-full object-contain filter drop-shadow-md">`;
+
+            // Update mini avatars
+            document.querySelectorAll('.orabo-mini-avatar').forEach(el => {
+                el.innerHTML = `<img src="${srcUrl}" alt="ORABO" class="w-full h-full object-contain">`;
+            });
+        }
+
+        // Interactive voice / tips from ORABO when tapped
+        const oraboQuotes = [
+            "「AIをうまく使うコツは、役割と文字数と改行のルールを具体的に教えてあげることだニャ！🐾」",
+            "「文字起こしの誤字があっても、AIが文脈を読んで賢く補正してくれるよ！試してみてニャ！」",
+            "「AIが作った文章は、必ずケアマネジャーの皆さんの目で最終チェックすることが大切だニャ！✨」",
+            "「第4表の『検討した項目』と『結論』が番号で揃っていると、行政の指導員にもめちゃくちゃ褒められるよ！」",
+            "「定型文作成や要約の時間を減らして、利用者さんと笑顔で話す時間をたっぷり増やそうニャ！🐱」"
+        ];
+        let quoteIndex = 0;
+        function triggerOraboVoice() {
+            quoteIndex = (quoteIndex + 1) % oraboQuotes.length;
+            const bubble = document.getElementById('orabo-speech-text');
+            bubble.innerHTML = oraboQuotes[quoteIndex];
+            showToast("ORABOがおしゃべりしたニャ！🐾");
+        }
+
+        // Safe Fallback Clipboard API
+        function copyToClipboard(elementId, labelName) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            const textToCopy = el.innerText || el.textContent;
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    showToast(`${labelName}をコピーしました！`);
+                }).catch(() => {
+                    execFallbackCopy(textToCopy, labelName);
+                });
+            } else {
+                execFallbackCopy(textToCopy, labelName);
+            }
+        }
+
+        function execFallbackCopy(text, labelName) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-999999px";
+            textArea.style.top = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                showToast(`${labelName}をコピーしました！`);
+            } catch (err) {
+                showToast("コピーに失敗しました。枠内を選択してコピーしてください。");
+            }
+            document.body.removeChild(textArea);
+        }
+
+        // Toast Feedback Message
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-msg');
+            toastMsg.innerText = message;
+            
+            toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+            toast.classList.add('opacity-100', 'translate-y-0');
+
+            setTimeout(() => {
+                toast.classList.remove('opacity-100', 'translate-y-0');
+                toast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+            }, 2500);
+        }
+
+        // Share & Resilient QR Modal Handlers
+        function openShareModal() {
+            const modal = document.getElementById('share-modal');
+            modal.classList.remove('hidden');
+
+            const urlInput = document.getElementById('custom-qr-url');
+            if (!urlInput.value) {
+                let defaultUrl = window.location.href;
+                // If loaded in iframe, local file or about:srcdoc, provide clean sample url
+                if (!defaultUrl || defaultUrl.startsWith('about:') || defaultUrl.startsWith('blob:') || defaultUrl.startsWith('file:') || defaultUrl.length > 150) {
+                    defaultUrl = "https://orangelabo-dx.netlify.app";
+                }
+                urlInput.value = defaultUrl;
+            }
+            renderSafeQRCode(urlInput.value);
+        }
+
+        function updateQrCode() {
+            const inputUrl = document.getElementById('custom-qr-url').value.trim();
+            if (!inputUrl) {
+                showToast("URLを入力してください");
+                return;
+            }
+            renderSafeQRCode(inputUrl);
+            showToast("QRコードを更新しました！");
+        }
+
+        function renderSafeQRCode(targetUrl) {
+            const qrContainer = document.getElementById('qrcode');
+            const labelEl = document.getElementById('qr-target-url');
+            qrContainer.innerHTML = '';
+            labelEl.innerText = targetUrl;
+
+            // Try local library first with error handling
+            try {
+                if (typeof QRCode !== 'undefined') {
+                    new QRCode(qrContainer, {
+                        text: targetUrl,
+                        width: 120,
+                        height: 120,
+                        colorDark: "#0f172a",
+                        colorLight: "#ffffff",
+                        correctLevel: QRCode.CorrectLevel.M
+                    });
+                    return;
+                }
+            } catch (err) {
+                console.warn('Local QRCode generator failed, switching to image fallback', err);
+            }
+
+            // Resilient Fallback: Use Google / QRServer Image API so it NEVER fails
+            const safeEncoded = encodeURIComponent(targetUrl);
+            const fallbackImg = document.createElement('img');
+            fallbackImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${safeEncoded}`;
+            fallbackImg.alt = "QR Code";
+            fallbackImg.className = "w-[120px] h-[120px] object-contain";
+            fallbackImg.onerror = function() {
+                // Secondary backup via google charts
+                fallbackImg.src = `https://chart.googleapis.com/chart?chs=120x120&cht=qr&chl=${safeEncoded}`;
+            };
+            qrContainer.appendChild(fallbackImg);
+        }
+
+        function closeShareModal() {
+            document.getElementById('share-modal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
